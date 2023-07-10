@@ -14,7 +14,7 @@ namespace ModuloAPI.Controllers
     {
         //Conexão com banco 
         private readonly AgendaContext _context;
-        public ContatoController(AgendaContext context)//Construtor do context conexão
+        public ContatoController(AgendaContext context)//Construtor do context conexão com banco de dados via injeção de dependencia
         {
             _context = context;
         }
@@ -26,7 +26,7 @@ namespace ModuloAPI.Controllers
         {
             _context.Add(contato);
             _context.SaveChanges();
-            return Ok(contato);
+            return CreatedAtAction(nameof(ObterPorId), new {id = contato.Id}, contato);//retornar id e informções de contato criado
         }
 
         [HttpGet("{id}")]
