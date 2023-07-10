@@ -17,7 +17,12 @@ Entity Framework
 				UPDATE, 
 				DELETE	}
 
-	
+	Verbos HTTP
+	POST,
+	GET,
+	PUT = passar somente opeçoes que vai atualizar, 
+	PATCH = atualizar, Obriga passar todas as informçoes, 
+	DELETE
 
 
 	

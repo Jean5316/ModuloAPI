@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj": {}
+    "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj": {}
   },
   "projects": {
-    "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj": {
+    "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
+        "projectUniqueName": "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
         "projectName": "ModuloAPI",
-        "projectPath": "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
+        "projectPath": "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
         "packagesPath": "C:\\Users\\jean1\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\obj\\",
+        "outputPath": "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

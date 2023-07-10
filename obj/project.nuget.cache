@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W3B6N8GlL5YwNcb6NwuU1Jq5psfbg9NEeAAic6iXqGPm+4ClWRBnMs0QFU1ugHlYaiLH+8rP0mLlweD29xTcNw==",
+  "dgSpecHash": "InHXLOWFqiohJQsQRf+WGVNWGaUXeSpfd+8Fsf+r9dI8g84vePUvmm4xSI3jCSbdv0BtyWm2sgKBcD3m0niFbg==",
   "success": true,
-  "projectFilePath": "c:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
+  "projectFilePath": "C:\\Users\\jean1\\.vscode\\Projects\\C#\\Curso C#\\ModuloAPI\\ModuloAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jean1\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\jean1\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
