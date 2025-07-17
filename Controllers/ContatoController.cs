@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ModuloAPI.Context;
 using ModuloAPI.Entities;
@@ -19,7 +20,14 @@ namespace ModuloAPI.Controllers
             _context = context;
         }
 
-        //ENDPOINTS 
+        //ENDPOINTS
+        [HttpGet]
+        public IActionResult ListContatos()
+        {
+            List<Contato> ListaContatos = new List<Contato>();
+            ListaContatos = _context.Contatos.ToList();
+            return Ok(ListaContatos);
+        } 
         
         [HttpPost]
         public IActionResult Create(Contato contato)//CREATE
