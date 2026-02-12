@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ModuloAPI.Context;
+using ModuloAPI.DTOs;
 using ModuloAPI.Entities;
 
 namespace ModuloAPI.Controllers
@@ -21,62 +22,91 @@ namespace ModuloAPI.Controllers
         }
 
         //ENDPOINTS
-        [HttpGet]
-        public IActionResult ListContatos()
+        [HttpGet("ListarContatos")]
+        public ActionResult ListContatos()
         {
-            List<Contato> ListaContatos = new List<Contato>();
-            ListaContatos = _context.Contatos.ToList();
-            return Ok(ListaContatos);
+            var contatos = _context.Contatos.ToList();
+            var response = contatos.Select(c => new ContatoResponse
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                Telefone = c.Telefone,
+                Ativo = c.Ativo
+            });
+            return Ok(response);
         } 
         
-        [HttpPost]
-        public IActionResult Create(Contato contato)//CREATE
+        [HttpPost("CriarNovoContato")]
+        public ActionResult CriarContato(ContatoCriar dto)//CREATE
         {
+            var contato = new Contato
+            {
+                Nome = dto.Nome,
+                Telefone = dto.Telefone,
+                Ativo = dto.Ativo
+            };
+
             _context.Add(contato);
             _context.SaveChanges();
             return CreatedAtAction(nameof(ObterPorId), new {id = contato.Id}, contato);//retornar id e informções de contato criado
         }
 
-        [HttpGet("{id}")]
-        public IActionResult ObterPorId(int id)//SELECT
+        [HttpGet("ObterPorId/{id}")]
+        public ActionResult ObterPorId(int id)//SELECT
         {
             var contato = _context.Contatos.Find(id);
             if (contato == null)
             {
                 return NotFound();
             }
-            return Ok(contato);
+
+            var response = new ContatoResponse
+            {
+                Id = contato.Id,
+                Nome = contato.Nome,
+                Telefone = contato.Telefone,
+                Ativo = contato.Ativo
+            };
+            return Ok(response);
         }
 
         [HttpGet("ObterPorNome")]
-        public IActionResult ObterPorNome(string nome)//SELECT
+        public ActionResult ObterPorNome(string nome)//SELECT
         {
             var contatos = _context.Contatos.Where(x => x.Nome.Contains(nome));//usando LINQ para buscar contatos
             if (contatos == null)
             {
                 return NotFound();
             }
-            return Ok(contatos);
+            
+            var response = contatos.Select(c => new ContatoResponse
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                Telefone = c.Telefone,
+                Ativo = c.Ativo
+            });
+            return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult AtualizarContato(int id, Contato contato)//UPDATE
+        [HttpPut("AtualizarContato/{id}")]
+        public IActionResult AtualizarContato(int id, ContatoCriar dto)//UPDATE
         {
             var contatoBanco = _context.Contatos.Find(id);
             if(contatoBanco == null)
             {
                 return NotFound();
             }
-            contatoBanco.Nome = contato.Nome;
-            contatoBanco.Telefone = contato.Telefone;
-            contatoBanco.Ativo = contato.Ativo;
+            contatoBanco.Nome = dto.Nome;
+            contatoBanco.Telefone = dto.Telefone;
+            contatoBanco.Ativo = dto.Ativo;
 
             _context.Contatos.Update(contatoBanco);
             _context.SaveChanges();
-            return Ok(contatoBanco);
+            return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("DeletarContato/{id}")]
         public IActionResult DeletarContato(int id)//DELETE
         {
             var contatoBanco = _context.Contatos.Find(id);
