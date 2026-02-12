@@ -1,5 +1,7 @@
 using ModuloAPI.Context;
 using Microsoft.EntityFrameworkCore;
+using ModuloAPI.Repository;
+using ModuloAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddCors(c =>
                     .AllowAnyMethod()
                 );
 });
+builder.Services.AddScoped<IContatoRepository, ContatoRepository>();//injeção de dependencia para o repositório, para que seja possível usar a interface e a implementação do repositório em outros lugares da aplicação, como no controller.
 
 var app = builder.Build();
 

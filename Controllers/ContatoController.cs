@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using ModuloAPI.Context;
 using ModuloAPI.DTOs;
 using ModuloAPI.Entities;
+using ModuloAPI.Repository;
+using ModuloAPI.Services;
 
 namespace ModuloAPI.Controllers
 {
@@ -15,17 +17,17 @@ namespace ModuloAPI.Controllers
     public class ContatoController : ControllerBase
     {
         //Conexão com banco 
-        private readonly AgendaContext _context;
-        public ContatoController(AgendaContext context)//Construtor do context conexão com banco de dados via injeção de dependencia
+        private readonly IContatoRepository _repository;
+        public ContatoController(IContatoRepository repository)//Construtor do context conexão com banco de dados via injeção de dependencia
         {
-            _context = context;
+            _repository = repository;
         }
 
         //ENDPOINTS
         [HttpGet("ListarContatos")]
-        public ActionResult ListContatos()
+        public async Task<ActionResult> ListContatos()
         {
-            var contatos = _context.Contatos.ToList();
+            var contatos = await _repository.ListarContatos();
             var response = contatos.Select(c => new ContatoResponse
             {
                 Id = c.Id,
@@ -37,7 +39,7 @@ namespace ModuloAPI.Controllers
         } 
         
         [HttpPost("CriarNovoContato")]
-        public ActionResult CriarContato(ContatoCriar dto)//CREATE
+        public async Task<ActionResult> CriarContato(ContatoCriar dto)//CREATE
         {
             var contato = new Contato
             {
@@ -46,15 +48,14 @@ namespace ModuloAPI.Controllers
                 Ativo = dto.Ativo
             };
 
-            _context.Add(contato);
-            _context.SaveChanges();
+            await  _repository.CriarContato(contato);
             return CreatedAtAction(nameof(ObterPorId), new {id = contato.Id}, contato);//retornar id e informções de contato criado
         }
 
         [HttpGet("ObterPorId/{id}")]
-        public ActionResult ObterPorId(int id)//SELECT
+        public async Task<ActionResult> ObterPorId(int id)//SELECT
         {
-            var contato = _context.Contatos.Find(id);
+            var contato = await _repository.ObterPorId(id);
             if (contato == null)
             {
                 return NotFound();
@@ -71,9 +72,9 @@ namespace ModuloAPI.Controllers
         }
 
         [HttpGet("ObterPorNome")]
-        public ActionResult ObterPorNome(string nome)//SELECT
+        public async Task<ActionResult> ObterPorNome(string nome)//SELECT
         {
-            var contatos = _context.Contatos.Where(x => x.Nome.Contains(nome));//usando LINQ para buscar contatos
+            var contatos = await _repository.ObterPorNome(nome);
             if (contatos == null)
             {
                 return NotFound();
@@ -90,9 +91,9 @@ namespace ModuloAPI.Controllers
         }
 
         [HttpPut("AtualizarContato/{id}")]
-        public IActionResult AtualizarContato(int id, ContatoCriar dto)//UPDATE
+        public async Task<IActionResult> AtualizarContato(int id, ContatoCriar dto)//UPDATE
         {
-            var contatoBanco = _context.Contatos.Find(id);
+            var contatoBanco = await _repository.ObterPorId(id);
             if(contatoBanco == null)
             {
                 return NotFound();
@@ -101,22 +102,20 @@ namespace ModuloAPI.Controllers
             contatoBanco.Telefone = dto.Telefone;
             contatoBanco.Ativo = dto.Ativo;
 
-            _context.Contatos.Update(contatoBanco);
-            _context.SaveChanges();
+            await _repository.AtualizarContato(contatoBanco);
             return NoContent();
         }
 
         [HttpDelete("DeletarContato/{id}")]
-        public IActionResult DeletarContato(int id)//DELETE
+        public async Task<IActionResult> DeletarContato(int id)//DELETE
         {
-            var contatoBanco = _context.Contatos.Find(id);
+            var contatoBanco = await _repository.ObterPorId(id);
             if(contatoBanco == null)
             {
                 return NotFound();
             }
 
-            _context.Contatos.Remove(contatoBanco);
-            _context.SaveChanges();
+            await _repository.DeletarContato(contatoBanco);
             return NoContent();
         }
 
