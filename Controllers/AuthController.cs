@@ -31,6 +31,7 @@ namespace ModuloAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
+            //buscar usuário no banco de dados com base nas credenciais fornecidas
             var usuario = _context.Usuarios.FirstOrDefault(u => u.Nome == dto.Nome && u.Senha == dto.Senha);
             if (usuario == null)
             {
@@ -45,7 +46,7 @@ namespace ModuloAPI.Controllers
             };
             //gerando a chave de segurança para assinar o token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            
+
             //gerando as credenciais de assinatura do token
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -67,6 +68,11 @@ namespace ModuloAPI.Controllers
         [HttpPost("register")]
         public IActionResult Register(LoginDto dto)
         {
+            var usuarioExistente = _context.Usuarios.FirstOrDefault(u => u.Nome == dto.Nome);
+
+            if (usuarioExistente != null)
+                return BadRequest("Usuário já existe");
+
             var usuario = new Usuario
             {
                 Nome = dto.Nome,

@@ -43,7 +43,7 @@ builder.Services.AddSwaggerGen(options =>
             new string[] {}
         }
     });
-});
+});//usar token no swagger para autenticação, para que seja possível testar os endpoints protegidos por autenticação diretamente no swagger, sem precisar de um cliente externo para obter o token e fazer as requisições autenticadas.
 
 builder.Services.AddCors(c =>
 {
@@ -51,6 +51,7 @@ builder.Services.AddCors(c =>
                     p => p.WithOrigins("http://localhost:4200")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
+                    .AllowCredentials()
                 );
 });
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();//injeção de dependencia para o repositório, para que seja possível usar a interface e a implementação do repositório em outros lugares da aplicação, como no controller.
@@ -76,7 +77,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(jwtSettings["Key"]))
     };
-});
+});//Configuração de autenticação JWT, para proteger os endpoints da API e garantir que apenas usuários autenticados possam acessá-los. As configurações de validação do token, como emissor, audiência e chave de assinatura, são definidas com base nas configurações do JWT no arquivo de configuração da aplicação (appsettings.json).
 
 
 
@@ -90,11 +91,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AngularApp");
-
-// app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
+// app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
