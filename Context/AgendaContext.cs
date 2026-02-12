@@ -16,5 +16,6 @@ namespace ModuloAPI.Context
         }
         //Entidade = classe no programa e tambem tabela no banco de dados
         public DbSet<Contato> Contatos { get; set; }//propriedade que refere a entidade(classe) no caso Contato
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 }

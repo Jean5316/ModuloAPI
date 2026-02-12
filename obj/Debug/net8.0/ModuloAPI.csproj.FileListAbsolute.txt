@@ -1073,3 +1073,4 @@ C:/Users/jean1/source/VSCODE/SistemDeAgenda/ModuloAPI/obj/Debug/net8.0/ref/Modul
 /home/jean/vscode/csharp/ModuloAPI/obj/Debug/net8.0/ModuloAPI.pdb
 /home/jean/vscode/csharp/ModuloAPI/obj/Debug/net8.0/ModuloAPI.genruntimeconfig.cache
 /home/jean/vscode/csharp/ModuloAPI/obj/Debug/net8.0/ref/ModuloAPI.dll
+/home/jean/vscode/csharp/ModuloAPI/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll

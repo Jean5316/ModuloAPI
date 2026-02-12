@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ModuloAPI.Context;
@@ -14,6 +15,7 @@ namespace ModuloAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]//Autenticação para acessar os endpoints
     public class ContatoController : ControllerBase
     {
         //Conexão com banco 
