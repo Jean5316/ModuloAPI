@@ -48,10 +48,9 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddCors(c =>
 {
     c.AddPolicy("AngularApp",
-                    p => p.WithOrigins("http://localhost:4200")
+                    p => p.AllowAnyOrigin()
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials()
                 );
 });
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>();//injeção de dependencia para o repositório, para que seja possível usar a interface e a implementação do repositório em outros lugares da aplicação, como no controller.
